@@ -1,47 +1,78 @@
 ---
 title: "Quickstart"
-description: "Begin with a guide on the fastest path to a successful outcome"
+description: "From a fresh API key to real Specter data in three steps"
 ---
 
-Describe how someone begins using your product. What is the first thing they need to do? Are there any prerequisites?
-
-A quickstart should take someone from zero to using your product. They'll get a quick win and a sense of what they can accomplish.
-
-## Prerequisites
-
-Before you begin, you must have:
-
-- Requirement one (for example, Node.js 18+, a free account, an API key)
-- Requirement two (for example, a compatible device, a compatible browser, a compatible operating system)
-
-## Get started
+This page takes you from a fresh API key to real Specter data in three steps. You'll find a company, then pull its full record. Every example uses live endpoints, so you can paste your key and run them as you read.
 
 <Steps>
-  <Step title="Install">
-    Describe how to install your product or sign up.
-
-    ```bash
-    npm install your-package
-    ```
+  <Step title="Set your key">
+    Every request needs your key in the `X-API-KEY` header. Grab it from the [API Console](https://app.tryspecter.com/settings/api-console), then keep it handy for the calls below. The base URL for everything is `https://app.tryspecter.com/api/v1`.
   </Step>
-  <Step title="Configure">
-    Describe any setup or configuration needed before first use.
+  <Step title="Make your first call">
+    Start by finding a company by name. This returns the basics, including the Specter ID you'll use to pull more:
 
     ```bash
-    your-cli init
+    curl "https://app.tryspecter.com/api/v1/companies/search?query=hedgehog" \
+      -H "X-API-KEY: YOUR_API_KEY"
     ```
+
+    ```json
+    [
+      {
+        "id": "1a2b3c4d5e6g1a2b3c4d5e6g",
+        "name": "Hedgehog Analytics",
+        "domain": "hedgehog_analytics.com",
+        "founded_year": 2019
+      }
+    ]
+    ```
+
+    If you get this back, your key works and you're talking to the API.
   </Step>
-  <Step title="Run it">
-    Show the first thing a user does to see it working.
+  <Step title="Enrich the company">
+    Now pull the full record. Send the domain to the enrich endpoint and you get funding, headcount, location, and more:
 
     ```bash
-    your-cli start
+    curl -X POST https://app.tryspecter.com/api/v1/companies \
+      -H "X-API-KEY: YOUR_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{ "domain": "hedgehog_analytics.com" }'
+    ```
+
+    ```json
+    [
+      {
+        "id": "1a2b3c4d5e6g1a2b3c4d5e6g",
+        "organization_name": "Hedgehog Analytics",
+        "hq": { "city": "London", "country": "United Kingdom" },
+        "employee_count": 39,
+        "funding": {
+          "total_funding_usd": 16600000,
+          "last_funding_type": "series_a"
+        },
+        "last_updated": "2026-01-01"
+      }
+    ]
     ```
   </Step>
 </Steps>
 
-<Tip>
-  Give people a way to get help. This could be a link to a support page, a chat with a customer support agent, or a forum for your product.
+That's the core loop: resolve a company, then enrich it. Calls draw on your credit allowance, so check your rate and credit limits before you run at scale.
 
-  Example: Need help? Reach out to us at [support@yourcompany.com](mailto:support@yourcompany.com).
-</Tip>
+## Where to go next
+
+Where you head from here depends on your plan.
+
+If you're on the Enrichment API, point it at a list you already have. Send a batch of up to 50 companies or people in one request and append funding, growth, and executive data to your CRM or dealflow.
+
+If you're on the Full API, work from a saved search instead. Build a search in the Specter web app, share it with the API, then pull its matches with `GET /searches/companies/{searchId}/results`. Add `?new=true` to fetch only this week's new matches, and you've got a feed you can poll on a schedule.
+
+<CardGroup cols={2}>
+  <Card title="Authentication" icon="key" href="/authentication">
+    How your API key works and how to keep it safe.
+  </Card>
+  <Card title="Errors" icon="triangle-exclamation" href="/errors">
+    The status codes you'll see and what each one means.
+  </Card>
+</CardGroup>

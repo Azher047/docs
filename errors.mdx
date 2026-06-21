@@ -1,0 +1,34 @@
+---
+title: "Errors"
+description: "How Specter reports errors, and what each status code means"
+---
+
+Every error comes back as JSON, so your code can catch it, log it, and act on it without parsing prose.
+
+Each error has two fields:
+
+```json
+{
+  "errorCode": "API_KEY_MISSING",
+  "message": "No API Key was presented on the header X-API-KEY"
+}
+```
+
+`errorCode` is a machine-readable identifier you can branch on. `message` is a plain-English explanation, usually with a hint for fixing it.
+
+## HTTP status codes
+
+| Code | What it means |
+| --- | --- |
+| `400` | Something's wrong with the request, like a missing or malformed field. This won't cost you credits, but it counts against your rate limit. |
+| `401` | The request isn't authenticated: your key was sent but isn't valid. Check it and try again. If it keeps failing, contact support. |
+| `402` | Returned as `OUT_OF_CREDITS` when your team has used all its credits for the billing period. Check the `X-CreditLimit-Reset` header for when they renew, or contact support to raise your allowance. |
+| `403` | Your key is valid, but your plan doesn't include this endpoint. For example, you called the Company API without being signed up to it. |
+| `404` | The resource you asked for doesn't exist. |
+| `422` | A validation problem. The `message` field tells you how to fix it. If that doesn't help, contact support. |
+| `429` | You've sent too many requests per second and been rate limited. Check the `X-RateLimit-Reset` header for when the limit resets. |
+| `50x` | Something broke on our side. We won't cost you credits, though you may have been rate limited. |
+
+<Note>
+  Hit a `402` or `429`? The response headers tell you when you can retry: `X-CreditLimit-Reset` for credits, `X-RateLimit-Reset` for the rate limit.
+</Note>

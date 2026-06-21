@@ -1,0 +1,33 @@
+---
+title: "Authentication"
+description: "One team-level API key, passed on every request"
+---
+
+The Specter API uses one team-level API key. Every call is tied to your firm's workspace, so the whole team works from the same key.
+
+## Finding your key
+
+Your key lives in the [API Console](https://app.tryspecter.com/settings/api-console). Open it and copy the key to your clipboard. If there's no key yet, click **Request API Access** and we'll review and approve it the same day.
+
+Why one key for the whole team? Most investment teams work from a single workspace, and a shared key keeps data permissions simple. Rate and credit limits still apply at the workspace level.
+
+## Keeping your key safe
+
+Treat your key like a password. Anyone who has it can reach your firm's data, so don't share it publicly or commit it to a code repository.
+
+## Making an authenticated request
+
+Pass your key in the `X-API-KEY` header on every request:
+
+```bash
+curl -X GET \
+  -H 'X-API-KEY: YOUR_API_KEY' \
+  -H 'accept: application/json' \
+  'https://app.tryspecter.com/api/v1/lists'
+```
+
+No bearer tokens, no version header, just the key.
+
+<Note>
+  Want to query saved searches and lists? Share them with the API first from **My Specter → Searches / Lists → [...] → Share with API**.
+</Note>

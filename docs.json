@@ -1,34 +1,226 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Documentation",
+  "name": "Specter API",
   "colors": {
-    "primary": "#16A34A",
+    "primary": "#0D9373",
     "light": "#07C983",
-    "dark": "#15803D"
+    "dark": "#0D9373"
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "pages": [
+    "tabs": [
       {
-        "group": "Getting Started",
-        "pages": [
-          "index",
-          "quickstart"
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Get started",
+            "pages": [
+              "index",
+              "quickstart",
+              "authentication",
+              "errors",
+              "llms"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "openapi": "https://api.tryspecter.com/api-ref/bundle_api.yaml",
+        "groups": [
+          {
+            "group": "Saved searches",
+            "pages": [
+              "GET /searches",
+              "DELETE /searches/{searchId}",
+              {
+                "group": "Company saved searches",
+                "pages": [
+                  "GET /searches/companies/{searchId}",
+                  "GET /searches/companies/{searchId}/results",
+                  "GET /searches/companies/{searchId}/news-signals",
+                  "GET /searches/companies/{searchId}/revenue-signals"
+                ]
+              },
+              {
+                "group": "People saved searches",
+                "pages": [
+                  "GET /searches/people/{searchId}",
+                  "GET /searches/people/{searchId}/results"
+                ]
+              },
+              {
+                "group": "Investor saved searches",
+                "pages": [
+                  "GET /searches/investors/{searchId}",
+                  "GET /searches/investors/{searchId}/results"
+                ]
+              },
+              {
+                "group": "Talent saved searches",
+                "pages": [
+                  "GET /searches/talent/{searchId}",
+                  "GET /searches/talent/{searchId}/results"
+                ]
+              },
+              {
+                "group": "Investor interest saved searches",
+                "pages": [
+                  "GET /searches/investor-interest/{searchId}",
+                  "GET /searches/investor-interest/{searchId}/results"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Lists",
+            "pages": [
+              {
+                "group": "Company lists",
+                "pages": [
+                  "GET /lists/companies",
+                  "POST /lists/companies",
+                  "GET /lists/companies/{listId}",
+                  "PATCH /lists/companies/{listId}",
+                  "DELETE /lists/companies/{listId}",
+                  "GET /lists/companies/{listId}/results",
+                  "GET /lists/companies/{listId}/news-signals",
+                  "GET /lists/companies/{listId}/revenue-signals"
+                ]
+              },
+              {
+                "group": "People lists",
+                "pages": [
+                  "GET /lists/people",
+                  "POST /lists/people",
+                  "GET /lists/people/{listId}",
+                  "PATCH /lists/people/{listId}",
+                  "DELETE /lists/people/{listId}",
+                  "GET /lists/people/{listId}/results"
+                ]
+              },
+              {
+                "group": "Investor lists",
+                "pages": [
+                  "GET /lists/investors",
+                  "POST /lists/investors",
+                  "GET /lists/investors/{listId}",
+                  "PATCH /lists/investors/{listId}",
+                  "DELETE /lists/investors/{listId}",
+                  "GET /lists/investors/{listId}/results"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Companies",
+            "pages": [
+              "POST /companies",
+              "POST /companies/by-id/bulk",
+              "GET /companies/search",
+              "GET /companies/{companyId}",
+              "GET /companies/{companyId}/similar",
+              "POST /companies/similar/by-id/bulk",
+              "GET /companies/{companyId}/people",
+              "GET /companies/{companyId}/funding-rounds",
+              "GET /companies/{companyId}/acquisitions",
+              "GET /companies/{companyId}/ipos"
+            ]
+          },
+          {
+            "group": "People",
+            "pages": [
+              "POST /people",
+              "POST /people/by-id/bulk",
+              "GET /people/search",
+              "GET /people/{personId}",
+              "GET /people/{personId}/email",
+              "POST /people/by-email",
+              "POST /people/by-email/bulk"
+            ]
+          },
+          {
+            "group": "Investors",
+            "pages": [
+              "GET /investors",
+              "POST /investors/by-id/bulk",
+              "GET /investors/search",
+              "GET /investors/{investorId}",
+              "GET /investors/{investorId}/funding-rounds"
+            ]
+          },
+          {
+            "group": "Signals",
+            "pages": [
+              {
+                "group": "Talent & interest signals",
+                "pages": [
+                  "GET /talent/{talentSignalId}",
+                  "POST /talent/by-id/bulk",
+                  "GET /investor-interest/{signalId}",
+                  "POST /investor-interest/by-id/bulk"
+                ]
+              },
+              {
+                "group": "News signals",
+                "pages": [
+                  "GET /news-signals/{signalId}",
+                  "GET /companies/{companyId}/news-signals"
+                ]
+              },
+              {
+                "group": "Revenue signals",
+                "pages": [
+                  "GET /revenue-signals",
+                  "GET /revenue-signals/{signalId}"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Network",
+            "pages": [
+              "GET /network/people",
+              "GET /network/companies",
+              "GET /network/connection/{companyId}"
+            ]
+          },
+          {
+            "group": "Transactions",
+            "pages": [
+              "GET /funding-rounds/{fundingRoundId}",
+              "GET /acquisitions/{acquisitionId}",
+              "GET /ipos/{ipoId}"
+            ]
+          },
+          {
+            "group": "Utilities",
+            "pages": [
+              "POST /entities/text-search"
+            ]
+          },
+          {
+            "group": "Account & usage",
+            "pages": [
+              "GET /organization/members",
+              "GET /logs"
+            ]
+          }
         ]
       }
     ],
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
+          "anchor": "Help Center",
+          "href": "https://intercom.help/specter-labs/en/",
+          "icon": "life-ring"
         },
         {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "Dashboard",
+          "href": "https://app.tryspecter.com",
+          "icon": "arrow-up-right-from-square"
         }
       ]
     }
@@ -41,32 +233,32 @@
     "links": [
       {
         "label": "Support",
-        "href": "mailto:azher@tryspecter.com"
+        "href": "mailto:support@tryspecter.com"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://app.mintlify.com"
+      "href": "https://app.tryspecter.com"
     }
   },
   "contextual": {
     "options": [
+      "claude",
       "copy",
       "view",
       "chatgpt",
-      "claude",
-      "perplexity",
-      "mcp",
-      "cursor",
-      "vscode"
+      "perplexity"
     ]
+  },
+  "feedback": {
+    "thumbsRating": true,
+    "suggestEdit": true
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "x": "https://x.com/SpecterHQ",
+      "linkedin": "https://linkedin.com/company/specterhq"
     }
   }
 }
